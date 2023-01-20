@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package grpc.api;
+
+service API {
+ rpc Challenge (stream ChallengeRequest) returns (stream ChallengeResponse) {}
+ rpc Quote (QuoteRequest) returns (QuoteResponse) {}
+}
+
+message ChallengeRequest {
+ uint64 solution = 1;
+}
+
+message ChallengeResponse {
+ uint64 left = 1;
+ uint64 difficulty = 2;
+ uint64 challenge = 3;
+ string token = 4;
+}
+
+message QuoteRequest {
+ string token = 1;
+}
+
+message QuoteResponse {
+ string quote = 1;
+}

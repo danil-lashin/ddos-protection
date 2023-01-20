@@ -1,0 +1,22 @@
+version: '3'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    ports:
+        - "50051:50051"
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "50051" ]
+      interval: 1s
+      timeout: 10s
+      retries: 10
+  client:
+    environment:
+      API_HOST: "http://server:50051"
+    build:
+      context: .
+      dockerfile: client.Dockerfile
+    depends_on:
+     server:
+      condition: service_healthy
